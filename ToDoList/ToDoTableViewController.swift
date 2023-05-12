@@ -14,6 +14,7 @@ class ToDoTableViewController: UITableViewController, CellDelegate{
             toDo.isComplete.toggle()
             toDos[indexPath.row] = toDo
             tableView.reloadRows(at: [indexPath], with: .automatic)
+            ToDo.saveToDos(toDos)
         }
     }
     
@@ -26,7 +27,7 @@ class ToDoTableViewController: UITableViewController, CellDelegate{
         navigationItem.leftBarButtonItem = editButtonItem
         
         if let savedToDos = ToDo.loadToDos() {
-            
+            toDos = savedToDos
         } else {
             toDos = ToDo.loadSampleToDos()
         }
@@ -46,7 +47,7 @@ class ToDoTableViewController: UITableViewController, CellDelegate{
             toDos.append(toDo)
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
-        
+        ToDo.saveToDos(toDos)
     }
     
     @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailTableViewController? {
@@ -88,6 +89,7 @@ class ToDoTableViewController: UITableViewController, CellDelegate{
         if editingStyle == .delete {
             toDos.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            ToDo.saveToDos(toDos)
         }
     }
 }

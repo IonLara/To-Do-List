@@ -16,13 +16,49 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="To Do Cell" id="a9k-yZ-Zk8">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="To Do Cell" id="a9k-yZ-Zk8" customClass="ToDoCell" customModule="ToDoList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a9k-yZ-Zk8" id="WKJ-LG-ug7">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JG6-nP-Lqj">
+                                            <rect key="frame" x="8" y="8.3333333333333339" width="54" height="27.333333333333329"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="54" id="MZx-Vj-ux2"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="circle" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                            </state>
+                                            <state key="selected" image="checkmark.circle.fill" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="completeButtonTapped:" destination="a9k-yZ-Zk8" eventType="touchUpInside" id="UC2-jH-gB0"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYE-96-R8d">
+                                            <rect key="frame" x="70" y="11.333333333333336" width="323" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="JG6-nP-Lqj" firstAttribute="centerY" secondItem="WKJ-LG-ug7" secondAttribute="centerY" id="3Ph-Ma-lqN"/>
+                                        <constraint firstItem="sYE-96-R8d" firstAttribute="leading" secondItem="JG6-nP-Lqj" secondAttribute="trailing" constant="8" symbolic="YES" id="KIG-Cf-Mhu"/>
+                                        <constraint firstItem="sYE-96-R8d" firstAttribute="centerY" secondItem="WKJ-LG-ug7" secondAttribute="centerY" id="N0f-ZV-16e"/>
+                                        <constraint firstItem="JG6-nP-Lqj" firstAttribute="leading" secondItem="WKJ-LG-ug7" secondAttribute="leading" constant="8" id="a9l-yk-vdj"/>
+                                        <constraint firstAttribute="trailing" secondItem="sYE-96-R8d" secondAttribute="trailing" id="nCU-5l-7vK"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="isCompleteButton" destination="JG6-nP-Lqj" id="jEl-ha-Goo"/>
+                                    <outlet property="titleLabel" destination="sYE-96-R8d" id="c6m-FP-eNA"/>
+                                    <segue destination="G3I-J6-2vZ" kind="presentation" id="tgP-CX-UDf"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -183,12 +219,12 @@
                     <navigationItem key="navigationItem" title="New To-Do" largeTitleDisplayMode="never" id="h84-Rk-yTT">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="S0N-TG-5OP">
                             <connections>
-                                <segue destination="fa5-Id-Qr1" kind="unwind" unwindAction="unwindToToDoListWithSegue:" id="ucL-xh-bg4"/>
+                                <segue destination="fa5-Id-Qr1" kind="unwind" identifier="" unwindAction="unwindToToDoListWithSegue:sender:" id="Ev3-ob-DHx"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="C63-MZ-FxA">
                             <connections>
-                                <segue destination="fa5-Id-Qr1" kind="unwind" identifier="saveUnwind" unwindAction="unwindToToDoListWithSegue:" id="3c3-wq-bDa"/>
+                                <segue destination="fa5-Id-Qr1" kind="unwind" identifier="save Unwind" unwindAction="unwindToToDoListWithSegue:sender:" id="Eiq-1b-ixE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -215,7 +251,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Nns-TU-tGl" kind="relationship" relationship="rootViewController" id="Sw5-fG-txz"/>
+                        <segue destination="Nns-TU-tGl" kind="relationship" relationship="rootViewController" destinationCreationSelector="editToDo:sender:" id="Sw5-fG-txz"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tcP-xJ-h7l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -239,6 +275,9 @@
             <point key="canvasLocation" x="1004" y="4"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="tgP-CX-UDf"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="circle" catalog="system" width="128" height="123"/>

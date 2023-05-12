@@ -10,7 +10,7 @@ import Foundation
 struct ToDo: Equatable {
     let id = UUID()
     let title: String
-    let isComplete: Bool
+    var isComplete: Bool
     let dueDate: Date
     let notes: String?
     

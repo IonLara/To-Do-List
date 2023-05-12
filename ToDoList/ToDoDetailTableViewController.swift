@@ -10,6 +10,7 @@ import UIKit
 class ToDoDetailTableViewController: UITableViewController {
     
     var isDatePickerHidden = true
+    var toDo : ToDo?
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var isCompleteButton: UIButton!
@@ -20,9 +21,19 @@ class ToDoDetailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dueDatePicker.date = Date().addingTimeInterval(24 * 60 * 60)
+        var currentDueDate = Date()
+        if let toDo = toDo {
+            navigationItem.title = "To-Do"
+            titleTextField.text = toDo.title
+            isCompleteButton.isSelected = toDo.isComplete
+            currentDueDate = toDo.dueDate
+            notesTextView.text = toDo.notes
+        } else {
+            currentDueDate = Date().addingTimeInterval(24 * 60 * 60)
+        }
+        dueDatePicker.date = currentDueDate
         updateSaveButton()
-        updateDateLabel(date: dueDatePicker.date)
+        updateDateLabel(date: currentDueDate)
     }
     
     func updateSaveButton() {
@@ -73,5 +84,8 @@ class ToDoDetailTableViewController: UITableViewController {
             tableView.beginUpdates()
             tableView.endUpdates()
         }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
     }
 }
